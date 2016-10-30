@@ -1,8 +1,7 @@
 Sway Admin Dashboard
 ==================================
 
-This is a straightforward boilerplate for building REST APIs with ES6 and Express.
-This is the an admin dashboard that controls all the trading on the Sway platform. Built on ES6, Express and React.
+This is the admin dashboard that controls all the trading on the Sway platform. Built on ES6, Express and React.
 
 - ES6 support via [babel](https://babeljs.io)
 - REST resources as middleware via [resource-router-middleware](https://github.com/developit/resource-router-middleware)
