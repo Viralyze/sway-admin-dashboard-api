@@ -13,7 +13,7 @@ Getting Started
 
 ```sh
 # Clone it
-git clone [insert Git link]
+git clone https://github.com/Viralyze/sway-admin-dashboard-api.git
 cd sway-admin-dashboard
 
 # Install dependencies for server and client
