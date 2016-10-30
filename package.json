@@ -1,7 +1,7 @@
 {
-  "name": "sway-api",
+  "name": "sway-admin-dashboard-api",
   "version": "0.0.1",
-  "description": "Starter project for an ES6 RESTful Express API",
+  "description": "Sway Admin Dashboard Server API",
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
@@ -28,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/developit/express-es6-rest-api.git"
   },
-  "author": "Jason Miller <jason@developit.ca>",
+  "author": "Alexander Nguyen <alex@viralyze.ca>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.13.3",
@@ -37,6 +37,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "firebase": "^3.5.0",
+    "foreman": "^2.0.0",
     "node-fetch": "^1.6.3",
     "resource-router-middleware": "^0.5.1",
     "twit": "^2.2.5"
