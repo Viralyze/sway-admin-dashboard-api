@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/developit/express-es6-rest-api.git"
+    "url": "https://github.com/Viralyze/sway-admin-dashboard.git"
   },
   "author": "Alexander Nguyen <alex@viralyze.ca>",
   "license": "MIT",
@@ -51,9 +51,9 @@
     "nodemon": "^1.9.2"
   },
   "bugs": {
-    "url": "https://github.com/developit/express-es6-rest-api/issues"
+    "url": "https://github.com/Viralyze/sway-admin-dashboard/issues"
   },
-  "homepage": "https://github.com/developit/express-es6-rest-api#readme",
+  "homepage": "https://github.com/Viralyze/sway-admin-dashboard#readme",
   "keywords": [
     "sway",
     "backend",

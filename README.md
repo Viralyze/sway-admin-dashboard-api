@@ -26,8 +26,14 @@ npm install -g foreman
 # Start development live-reload for server and client
 nf start web-dev,api-dev
 
-# Start production server:
+# Start production server
 nf start web,api
+
+# Running tests on server
+npm test
+
+# Running tests on client
+cd client && npm test
 ```
 
 For Docker

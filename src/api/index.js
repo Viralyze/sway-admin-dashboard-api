@@ -21,15 +21,16 @@ export default ({ config, db }) => {
 	api.use('/facets', facets({ config, db }));
 
 	// perhaps expose some API metadata at the root
-	api.get('/', (req, res) => {
-  	return res.json({ version });
-	});
+  api.get('/', (req, res) => {
+    return res.json({ version });
+  });
 
   /**
    * Updates and starts trading the queues
    * @type GET
    */
   api.get('/updateQueueAndStartTrading', (req, res) => {
+    /*global Promise Promise:true*/
     Promise.all([getAllActiveTrades()])
     .then(function(snapshot) {
       var allTradeLists = snapshot[0].val();
@@ -222,61 +223,61 @@ export default ({ config, db }) => {
    * Dummy function to create an account and info into activeTrades table
    * @return {[type]} [description]
    */
-  function createAccount() {
-    // var accInfo = {
-    //   "accCategory" : "Lifestyle",
-    //   "accType" : "Twitter",
-    //   "handle" : "@alexviralyze",
-    //   "image" : "https://pbs.twimg.com/profile_images/657988179828604928/pS97oW_f_normal.jpg",
-    //   "name" : "Alexander Nguyen",
-    //   "accOAuth" : {
-    //     "consumerKey" : "5WvOznkglrwslowIgE0DPxCkH",
-    //     "consumerSecret" : "592Dffopxly02EUkwiQ1UV0zFSmnqI5kA9sdVDFROtpW1VXmJl",
-    //     "accessToken" : "787010409328889856-pZTosja1sjEz94Pv08nMzAXLs8nvupT",
-    //     "accessTokenSecret" : "0HEAI6GnvwTDkW3w2n900HfhqozUXKi8AuvzNztzwsAqw"
-    //   }
-    // };
-    // var accKey = 'alexviralyze-Twitter';
-
-    // var accInfo = {
-    //   "accCategory" : "Lifestyle",
-    //   "accType" : "Twitter",
-    //   "handle" : "@alxdrnguyen",
-    //   "image" : "https://pbs.twimg.com/profile_images/578311525263282176/1mVSW9vX_normal.jpeg",
-    //   "name" : "Alexander N",
-    //   "accOAuth" : {
-    //     "consumerKey" : "wBosAFst8M9CI7OPoVGshtKsm",
-    //     "consumerSecret" : "GcAWRMpKl2VKkQhSeeO0vFVHbPuqiIOqQl99dsk6UdSyYIbz1F",
-    //     "accessToken" : "140631605-v9EXXYJHAAiTzYuo2L2jHS3FIeE8HTMP2WsUKwEO",
-    //     "accessTokenSecret" : "hwngnDKxR3IVY0G7IOHDScacGIVxmSnY6x4T1YX03h9FC"
-    //   }
-    // };
-    // var accKey = 'alxdrnguyen-Twitter';
-
-    // var accInfo = {
-    //   "accCategory" : "Lifestyle",
-    //   "accType" : "Twitter",
-    //   "handle" : "@mycoollifestyle",
-    //   "image" : "https://pbs.twimg.com/profile_images/777592386473988096/Lc0fcmPs_normal.jpg",
-    //   "name" : "MyLifestyle",
-    //  "accOAuth" : {
-    //    "consumerKey" : "1c84SXh6SQNn1seShWNf29nCL",
-    //    "consumerSecret" : "bdeSnI1LAdnyFG5f1J98G6qO91xBTwPfKtT5HxxARstM6eHkiv",
-    //    "accessToken" : "787011363369463808-oLSYLvcahycSd1mGdcuyUdg7L8cFA6O",
-    //    "accessTokenSecret" : "7Sej0r3gKgv8iHdjBUEVZDlShNkt3DgcyjW0BSfzVTwvD"
-    //  }
-    // };
-    // var accKey = 'mycoollifestyle-Twitter';
-
-    var updates = {};
-    var accInfoForTrades = {
-      "accCategory" : accInfo.accCategory,
-      "accOAuth" : accInfo.accOAuth
-    }
-    updates['/activeTrades/' + accKey] = accInfoForTrades;
-
-    firebase.database().ref().update(updates);
-  }
+  // function createAccount() {
+  //   var accInfo = {
+  //     "accCategory" : "Lifestyle",
+  //     "accType" : "Twitter",
+  //     "handle" : "@alexviralyze",
+  //     "image" : "https://pbs.twimg.com/profile_images/657988179828604928/pS97oW_f_normal.jpg",
+  //     "name" : "Alexander Nguyen",
+  //     "accOAuth" : {
+  //       "consumerKey" : "5WvOznkglrwslowIgE0DPxCkH",
+  //       "consumerSecret" : "592Dffopxly02EUkwiQ1UV0zFSmnqI5kA9sdVDFROtpW1VXmJl",
+  //       "accessToken" : "787010409328889856-pZTosja1sjEz94Pv08nMzAXLs8nvupT",
+  //       "accessTokenSecret" : "0HEAI6GnvwTDkW3w2n900HfhqozUXKi8AuvzNztzwsAqw"
+  //     }
+  //   };
+  //   var accKey = 'alexviralyze-Twitter';
+  //
+  //   var accInfo = {
+  //     "accCategory" : "Lifestyle",
+  //     "accType" : "Twitter",
+  //     "handle" : "@alxdrnguyen",
+  //     "image" : "https://pbs.twimg.com/profile_images/578311525263282176/1mVSW9vX_normal.jpeg",
+  //     "name" : "Alexander N",
+  //     "accOAuth" : {
+  //       "consumerKey" : "wBosAFst8M9CI7OPoVGshtKsm",
+  //       "consumerSecret" : "GcAWRMpKl2VKkQhSeeO0vFVHbPuqiIOqQl99dsk6UdSyYIbz1F",
+  //       "accessToken" : "140631605-v9EXXYJHAAiTzYuo2L2jHS3FIeE8HTMP2WsUKwEO",
+  //       "accessTokenSecret" : "hwngnDKxR3IVY0G7IOHDScacGIVxmSnY6x4T1YX03h9FC"
+  //     }
+  //   };
+  //   var accKey = 'alxdrnguyen-Twitter';
+  //
+  //   var accInfo = {
+  //     "accCategory" : "Lifestyle",
+  //     "accType" : "Twitter",
+  //     "handle" : "@mycoollifestyle",
+  //     "image" : "https://pbs.twimg.com/profile_images/777592386473988096/Lc0fcmPs_normal.jpg",
+  //     "name" : "MyLifestyle",
+  //    "accOAuth" : {
+  //      "consumerKey" : "1c84SXh6SQNn1seShWNf29nCL",
+  //      "consumerSecret" : "bdeSnI1LAdnyFG5f1J98G6qO91xBTwPfKtT5HxxARstM6eHkiv",
+  //      "accessToken" : "787011363369463808-oLSYLvcahycSd1mGdcuyUdg7L8cFA6O",
+  //      "accessTokenSecret" : "7Sej0r3gKgv8iHdjBUEVZDlShNkt3DgcyjW0BSfzVTwvD"
+  //    }
+  //   };
+  //   var accKey = 'mycoollifestyle-Twitter';
+  //
+  //   var updates = {};
+  //   var accInfoForTrades = {
+  //     "accCategory" : accInfo.accCategory,
+  //     "accOAuth" : accInfo.accOAuth
+  //   }
+  //   updates['/activeTrades/' + accKey] = accInfoForTrades;
+  //
+  //   firebase.database().ref().update(updates);
+  // }
 
 	return api;
 }
