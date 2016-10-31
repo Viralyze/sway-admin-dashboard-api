@@ -1,6 +1,4 @@
 language: node_js
 node_js:
-  - "6"
-  - "5"
   - "4"
-script: cd client && npm install && npm test
+script: npm install && npm test && cd client && npm install && npm test
