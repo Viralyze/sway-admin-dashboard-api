@@ -1,5 +1,6 @@
 Sway Admin Dashboard
 ==================================
+[![Build Status](https://travis-ci.org/Viralyze/sway-admin-dashboard.svg?branch=master)](https://travis-ci.org/Viralyze/sway-admin-dashboard)
 
 This is the admin dashboard that controls all the trading on the Sway platform. Built on ES6, Express and React.
 
