@@ -187,6 +187,7 @@ export default ({ config, db }) => {
             }
           }
         }
+        return res.json({'status' : 'Spot has been added to trades'});
       }
     });
 	});
