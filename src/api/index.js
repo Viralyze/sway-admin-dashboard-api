@@ -35,6 +35,8 @@ export default ({ config, db }) => {
     .then(function(snapshot) {
       var allTradeLists = snapshot[0].val();
 
+      /* Add condition if there are active trades going on then terminate */
+
       for (var accountKey in allTradeLists) {
         // Creates a queue for each account
         var tradeQueue = Queue(accountKey, 6379, '127.0.0.1');
@@ -67,6 +69,7 @@ export default ({ config, db }) => {
           T.post('statuses/retweet/:id', { id: regOneId }, function (err, data, response) {
             if (err) {
               console.log(err.message + " reg spot 1");
+              done(Error(err.message));
             } else {
               console.log('retweeted spot 1');
               jobData.progress(16);
@@ -74,6 +77,7 @@ export default ({ config, db }) => {
               T.post('statuses/retweet/:id', { id: regTwoId }, function (err, data, response) {
                 if (err) {
                   console.log(err.message + " reg spot 2");
+                  done(Error(err.message));
                 } else {
                   console.log('retweeted spot 2');
                   jobData.progress(32);
@@ -81,6 +85,7 @@ export default ({ config, db }) => {
                   T.post('statuses/retweet/:id', { id: adId }, function (err, data, response) {
                     if (err) {
                       console.log(err.message + " ad spot");
+                      done(Error(err.message));
                     } else {
                       console.log('retweeted ad');
                       jobData.progress(48);
@@ -98,6 +103,7 @@ export default ({ config, db }) => {
             T.post('statuses/unretweet/:id', { id: regOneId }, function (err, data, response) {
               if (err) {
                 console.log(err.message + " reg spot 1");
+                done(Error(err.message));
               } else {
                 console.log('unretweeted spot 1');
                 jobData.progress(64);
@@ -108,6 +114,7 @@ export default ({ config, db }) => {
             T.post('statuses/unretweet/:id', { id: regTwoId }, function (err, data, response) {
               if (err) {
                 console.log(err.message + " reg spot 2");
+                done(Error(err.message));
               } else {
                 console.log('unretweeted spot 2');
                 jobData.progress(80);
@@ -118,6 +125,7 @@ export default ({ config, db }) => {
             T.post('statuses/unretweet/:id', { id: adId }, function (err, data, response) {
               if (err) {
                 console.log(err.message + " ad spot");
+                done(Error(err.message));
               } else {
                 console.log('unretweeted ad');
                 jobData.progress(99);
@@ -148,15 +156,15 @@ export default ({ config, db }) => {
           var options = {
             'attempts' : 2,
             'timeout' : 1000 * 60 * 25, // 20 mins
-            // 'jobId' : spotKey,
+            'jobId' : spotKey,
             'delay' : jobTimeStart,
             'removeOnComplete' : true
           };
           tradeQueue.add(jobData, options);
         }
+      };
 
-        return res.json({'status' : 'Trading has started!'});
-      }
+      return res.json({'status' : 'Trading has started!'});
     });
 	});
 

@@ -1,22 +1,15 @@
 FROM node:4-onbuild
 
-# Create app directory
-RUN mkdir -p /usr/src/sway-admin-dashboard
-WORKDIR /usr/src/sway-admin-dashboard
-
 # Install server dependencies
-COPY package.json /usr/src/sway-admin-dashboard
+COPY package.json package.json
 RUN npm install
 
 # Install client dependencies
-COPY client/package.json /usr/src/sway-admin-dashboard/client
+COPY client/package.json client/package.json
 RUN npm install
 
-# Install Node Foreman command line tool
-RUN npm install -g foreman
-
 # Bundle app source
-COPY . /usr/src/sway-admin-dashboard
+COPY . /usr/src/app
 
 # Expose client and server ports
 EXPOSE 5000 5100
