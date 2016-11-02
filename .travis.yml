@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - '4'
-script: npm install && npm test && cd client && npm install && npm test
 notifications:
   slack:
     secure: t27Yh63RW02B/ogJE9PS8b4vg5UE84Nm/mNDVii5W6S0vsyfomea2py3rQdGs1ypvGjaM6B5Q7UdwUeRnqtYiq5oVSfNAhkGO1N7IL4Je6dZLyY8nvtjdDvYK4NKvE08jT8cayiBFfd9GpdgPvbrkMwyjQzv8/aln6CiDVfw7LBWd+MQTWm1SIKilXOz01QMFFHgypnhrbLNsUHq/+hEvr24PjKgC1L76nYXSM/J/DHlTT/iKeMJWzy015BOFDUt55Phq79jUiMSLmveWj8KgTfWroEmK7pLmErOkm8Cw4n7OH4mni2XguHrkBfMV3Jm0e3DBK7E/yxL5uwFbUbdEE1tD1hUnWWwoKTaeIYs1nEq8tscBQsEz+hcOu6eMxdg4ozNr5sz2/EsyW5zAnWsS5lmCdBNkS+/Ou4QG2ifMcEDD7mb8hoGXW2D21mFKgZBcaT36VzMjXAapQj0R8KiQ+m6RqCjKh0AWiGYgYzeZvSsOhH0oZ0KBlMmyW4DfY4YDYIkkR5BmXWVARpSm54IfyJsBPnYvacYnJHi8NcN2VC7qm8oiLmGeqBa9+dTlEJoTpoFmDWdvgYYpjh5iVVrM9tyda+NVjmMUfJB0HTa4Z5OHDx62lRC9IRzSGkkWwBxHxgeCGjVy2tAGP8iWR5z5RJp84Hh4FlGa+ENyLDLHjE=
+script: npm install && npm test && cd client && npm install && npm test
