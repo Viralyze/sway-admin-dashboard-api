@@ -1,15 +1,15 @@
 FROM node:4-onbuild
 
 # Install server dependencies
-COPY package.json package.json
+ADD package.json package.json
 RUN npm install
 
 # Install client dependencies
-COPY client/package.json client/package.json
+ADD client/package.json client/package.json
 RUN npm install
 
 # Bundle app source
-COPY . /usr/src/app
+ADD . .
 
 # Expose client and server ports
 EXPOSE 5000 5100
