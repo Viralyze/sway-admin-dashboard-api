@@ -1,0 +1,6 @@
+matador:
+  image: cyberkronos/matador-bull-ui
+  links:
+    - redis
+redis:
+  image: redis

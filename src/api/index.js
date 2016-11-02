@@ -162,7 +162,7 @@ export default ({ config, db }) => {
           };
           tradeQueue.add(jobData, options);
         }
-      };
+      }
 
       return res.json({'status' : 'Trading has started!'});
     });

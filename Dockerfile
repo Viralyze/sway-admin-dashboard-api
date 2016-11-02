@@ -1,11 +1,16 @@
 FROM node:4-onbuild
 
+# Create app directory
+RUN mkdir -p /usr/src/sway-admin-dashboard
+WORKDIR /usr/src/sway-admin-dashboard
+
 # Install server dependencies
-ADD package.json package.json
+ADD package.json /usr/src/sway-admin-dashboard
 RUN npm install
 
 # Install client dependencies
-ADD client/package.json client/package.json
+RUN cd client
+ADD package.json /usr/src/sway-admin-dashboard/client
 RUN npm install
 
 # Bundle app source
