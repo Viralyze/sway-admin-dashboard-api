@@ -39,3 +39,8 @@ cd client && npm test
 
 For Docker
 ---------------
+
+Issues
+---------------
+- Can't seem to dockerize app when client and server are in one folder
+- Foreman and Procfile are no longer used since frontend and backend are detached
