@@ -17,5 +17,5 @@ ADD . /usr/src/sway-admin-server
 EXPOSE 8081
 
 # Start app
-CMD npm run dev
-# CMD npm start - for production
+# CMD npm run dev
+CMD npm start
