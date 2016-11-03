@@ -5,14 +5,14 @@ import Twit from 'twit';
 import firebase from 'firebase';
 
 // Firebase Init
-var config = {
+const config = {
     apiKey: "AIzaSyBWNb4qsOVe6rIPv1CmKvI44anyq4xs1oY",
     authDomain: "test-142d6.firebaseapp.com",
     databaseURL: "https://test-142d6.firebaseio.com",
 };
 firebase.initializeApp(config);
 
-var Queue = require('bull');
+const Queue = require('bull');
 
 export default ({ config, db }) => {
 	let api = Router();
@@ -33,31 +33,31 @@ export default ({ config, db }) => {
     /*global Promise Promise:true*/
     Promise.all([getAllActiveTrades()])
     .then(function(snapshot) {
-      var allTradeLists = snapshot[0].val();
+      const allTradeLists = snapshot[0].val();
 
       /* Add condition if there are active trades going on then terminate */
 
-      for (var accountKey in allTradeLists) {
-        // Creates a queue for each account
-        var tradeQueue = Queue(accountKey, 6379, '127.0.0.1');
+      for (let accountKey in allTradeLists) {
+        // Creates a queue for each account at localhost:6379
+        const tradeQueue = Queue(accountKey);
 
         // Processes the function to be executed on the queue
         tradeQueue.process(function(jobData, done) {
           // Extract Tweet IDs from URLs
-          var adUrl = jobData.data.adUrl;
-          var regOneUrl = jobData.data.regOneUrl;
-          var regTwoUrl = jobData.data.regTwoUrl;
+          const adUrl = jobData.data.adUrl;
+          const regOneUrl = jobData.data.regOneUrl;
+          const regTwoUrl = jobData.data.regTwoUrl;
 
-          var adUrlArr = adUrl.split("/");
-          var regOneUrlArr = regOneUrl.split("/");
-          var regTwoUrlArr = regTwoUrl.split("/");
+          const adUrlArr = adUrl.split("/");
+          const regOneUrlArr = regOneUrl.split("/");
+          const regTwoUrlArr = regTwoUrl.split("/");
 
-          var adId = adUrlArr[adUrlArr.length-1];
-          var regOneId = regOneUrlArr[regOneUrlArr.length-1];
-          var regTwoId = regTwoUrlArr[regTwoUrlArr.length-1];
+          const adId = adUrlArr[adUrlArr.length-1];
+          const regOneId = regOneUrlArr[regOneUrlArr.length-1];
+          const regTwoId = regTwoUrlArr[regTwoUrlArr.length-1];
 
           // Creates a new Twit object
-          var T = new Twit({
+          const T = new Twit({
             consumer_key: 'wBosAFst8M9CI7OPoVGshtKsm',
             consumer_secret: 'GcAWRMpKl2VKkQhSeeO0vFVHbPuqiIOqQl99dsk6UdSyYIbz1F',
             access_token: jobData.data.accOAuth.accessToken,
@@ -128,36 +128,30 @@ export default ({ config, db }) => {
                 done(Error(err.message));
               } else {
                 console.log('unretweeted ad');
-                jobData.progress(99);
+                jobData.progress(100);
               }
             });
 
-            // Update Firebase to remove trade out of activeTrades and put into historyTrades
-            // var updates = {};
-            // updates['/historyTrades/' + accountKey + '/spots/' + spotKey] = spotInfo;
-            // firebase.database().ref().update(updates);
-
-            jobData.progress(100);
             done();
-          }, 1000 * 60 * 20); // 19 mins
+          }, 1000 * 60); // 19 mins
         });
 
         // Queues each trade as a new job
-        var jobTimeStart = -1200000;
-        var spotsInActiveTrades = allTradeLists[accountKey].spots;
-        for (var spotKey in spotsInActiveTrades) {
+        let jobTimeStart = -1200000;
+        const spotsInActiveTrades = allTradeLists[accountKey].spots;
+        for (let spotKey in spotsInActiveTrades) {
           // Append accOAuth object to spot data in order to send it as one data object for job
           spotsInActiveTrades[spotKey]['accOAuth'] = allTradeLists[accountKey].accOAuth;
 
-          var jobData = spotsInActiveTrades[spotKey];
+          const jobData = spotsInActiveTrades[spotKey];
 
           // Each job can only start 20 mins after the previous one
           jobTimeStart += 1200000;
-          var options = {
+          const options = {
             'attempts' : 2,
             'timeout' : 1000 * 60 * 25, // 20 mins
             'jobId' : spotKey,
-            'delay' : jobTimeStart,
+            // 'delay' : jobTimeStart,
             'removeOnComplete' : true
           };
           tradeQueue.add(jobData, options);
@@ -168,29 +162,43 @@ export default ({ config, db }) => {
     });
 	});
 
+  api.get('/deleteAllActiveTrades', (req, res) => {
+    Promise.all([getAllActiveTrades()])
+    .then(function(snapshot) {
+      const allTradeLists = snapshot[0].val();
+
+      for (let accountKey in allTradeLists) {
+        firebase.database().ref('/activeTrades/' + accountKey).child('spots').remove();
+      }
+
+      return res.json({'status' : 'All active trades deleted'});
+    });
+  });
+
   /**
    * Adds specified spot to the category trade list of accounts
    * @type POST
    */
   api.post('/addSpotToTrades', (req, res) => {
-    var spotInfo = req.body;
-    var spotKey = spotInfo.spotKey;
+    const spotInfo = req.body;
+    const spotKey = spotInfo.spotKey;
 
     Promise.all([getActiveTradesInCategory(spotInfo.accCategory)])
     .then(function(snapshots) {
-      var tradeListsInCategory = snapshots[0].val();
+      const tradeListsInCategory = snapshots[0].val();
       if (tradeListsInCategory == null) {
         // No accounts in category
         return res.json({'status' : 'No active trading accounts in this category'});
       } else {
         // For each account in the category, add the new spot to its' trade list
-        for (var accountKey in tradeListsInCategory) {
+        for (let accountKey in tradeListsInCategory) {
           if (tradeListsInCategory.hasOwnProperty(accountKey)) {
             if (accountKey != spotInfo.accountKey) {
-              var updates = {};
+              const updates = {};
               spotInfo.approved = true;
               updates['/spots/' + spotKey + '/approved'] = true;
               updates['/activeTrades/' + accountKey + '/spots/' + spotKey] = spotInfo;
+              updates['/tradeHistory/' + accountKey + '/' + spotKey] = spotInfo;
               firebase.database().ref().update(updates);
             }
           }
@@ -210,7 +218,7 @@ export default ({ config, db }) => {
    * @return {[type]}          [void]
    */
   function getActiveTradesInCategory(category) {
-    var ref = firebase.database().ref("activeTrades");
+    const ref = firebase.database().ref("activeTrades");
     return ref.orderByChild("accCategory").equalTo(category).once("value", function(snapshot) {
       return snapshot.val();
     });
@@ -222,7 +230,7 @@ export default ({ config, db }) => {
    * @return {[type]}          [void]
    */
   function getAllActiveTrades() {
-    var ref = firebase.database().ref("activeTrades");
+    const ref = firebase.database().ref("activeTrades");
     return ref.once("value", function(snapshot) {
       return snapshot.val();
     });
