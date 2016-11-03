@@ -26,7 +26,7 @@ npm run dev
 # Run prod server
 npm start
 
-# Running tests on server
+# Running tests
 npm test
 ```
 
