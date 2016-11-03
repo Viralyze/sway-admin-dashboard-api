@@ -1,8 +1,8 @@
 Sway Admin Dashboard
 ==================================
-[![Build Status](https://travis-ci.org/Viralyze/sway-admin-dashboard.svg?branch=master)](https://travis-ci.org/Viralyze/sway-admin-dashboard)
+[![Build Status](https://travis-ci.org/Viralyze/sway-admin-server.svg?branch=master)](https://travis-ci.org/Viralyze/sway-admin-server)
 
-This is the admin dashboard that controls all the trading on the Sway platform. Built on ES6, Express and React.
+This is the admin server that controls all the trading on the Sway platform. Built on Node, ES6, Express.
 
 - ES6 support via [babel](https://babeljs.io)
 - REST resources as middleware via [resource-router-middleware](https://github.com/developit/resource-router-middleware)
@@ -14,27 +14,20 @@ Getting Started
 
 ```sh
 # Clone it
-git clone https://github.com/Viralyze/sway-admin-dashboard-api.git
-cd sway-admin-dashboard
+git clone https://github.com/Viralyze/sway-admin-server.git
+cd sway-admin-server
 
-# Install dependencies for server and client
+# Install dependencies
 npm install
-cd client && npm install
 
-# Install Node Foreman command line tool
-npm install -g foreman
+# Run dev server
+npm run dev
 
-# Start development live-reload for server and client
-nf start web-dev,api-dev
-
-# Start production server
-nf start web,api
+# Run prod server
+npm start
 
 # Running tests on server
 npm test
-
-# Running tests on client
-cd client && npm test
 ```
 
 For Docker
