@@ -1,6 +1,26 @@
-matador:
-  image: cyberkronos/matador-bull-ui
+web:
+  image: 'viralyze/sway-admin-dashboard:latest'
+  links:
+    - server
+  ports:
+    - '8080'
+  restart: on-failure
+server:
+  image: 'viralyze/sway-admin-server:latest'
   links:
     - redis
+  ports:
+    - '8081'
+  restart: on-failure
+matador:
+  image: 'cyberkronos/matador-bull-ui:latest'
+  links:
+    - redis
+  ports:
+    - '1337'
+  restart: on-failure
 redis:
-  image: redis
+  image: 'redis:latest'
+  ports:
+    - '6379'
+  restart: on-failure

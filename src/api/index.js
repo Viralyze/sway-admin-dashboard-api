@@ -3,14 +3,15 @@ import { Router } from 'express';
 import facets from './facets';
 import Twit from 'twit';
 import firebase from 'firebase';
+import config from '../config.json';
 
 // Firebase Init
-const config = {
-    apiKey: "AIzaSyBWNb4qsOVe6rIPv1CmKvI44anyq4xs1oY",
-    authDomain: "test-142d6.firebaseapp.com",
-    databaseURL: "https://test-142d6.firebaseio.com",
+const fbConfig = {
+    apiKey: config.firebase.apiKey,
+    authDomain: config.firebase.authDomain,
+    databaseURL: config.firebase.databaseURL
 };
-firebase.initializeApp(config);
+firebase.initializeApp(fbConfig);
 
 const Queue = require('bull');
 
@@ -58,8 +59,8 @@ export default ({ config, db }) => {
 
           // Creates a new Twit object
           const T = new Twit({
-            consumer_key: 'wBosAFst8M9CI7OPoVGshtKsm',
-            consumer_secret: 'GcAWRMpKl2VKkQhSeeO0vFVHbPuqiIOqQl99dsk6UdSyYIbz1F',
+            consumer_key: config.twitter.consumerKey,
+            consumer_secret: config.twitter.consumerSecret,
             access_token: jobData.data.accOAuth.accessToken,
             access_token_secret: jobData.data.accOAuth.accessTokenSecret
           });

@@ -1,5 +1,14 @@
 {
 	"port": 8081,
 	"bodyLimit": "100kb",
-	"corsHeaders": ["Link"]
+	"corsHeaders": ["Link"],
+	"firebase": {
+		"apiKey": "AIzaSyBWNb4qsOVe6rIPv1CmKvI44anyq4xs1oY",
+    "authDomain": "test-142d6.firebaseapp.com",
+    "databaseURL": "https://test-142d6.firebaseio.com"
+	},
+	"twitter": {
+		"consumerKey": "wBosAFst8M9CI7OPoVGshtKsm",
+		"consumerSecret": "GcAWRMpKl2VKkQhSeeO0vFVHbPuqiIOqQl99dsk6UdSyYIbz1F"
+	}
 }
