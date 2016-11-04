@@ -1,5 +1,6 @@
 FROM node:4-onbuild
 
+# Author
 MAINTAINER Alexander Nguyen
 
 # Create app directory
